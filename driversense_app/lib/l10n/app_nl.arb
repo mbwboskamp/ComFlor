@@ -1,0 +1,127 @@
+{
+  "@@locale": "nl",
+  "appTitle": "DriverSense",
+  "login": "Inloggen",
+  "email": "E-mailadres",
+  "password": "Wachtwoord",
+  "forgotPassword": "Wachtwoord vergeten?",
+  "startCheck": "Start Check",
+  "endCheck": "Eind Check",
+  "selectVehicle": "Selecteer voertuig",
+  "enterKmReading": "Voer kilometerstand in",
+  "takePhoto": "Maak foto",
+  "skipPhoto": "Overslaan",
+  "questions": "Vragen",
+  "questionProgress": "Vraag {current} van {total}",
+  "@questionProgress": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "selectMood": "Hoe voel je je?",
+  "confirmAndStart": "Bevestigen en starten",
+  "tripActive": "Rit actief",
+  "tripDuration": "Duur: {duration}",
+  "@tripDuration": {
+    "placeholders": {
+      "duration": {"type": "String"}
+    }
+  },
+  "tripDistance": "Afstand: {distance} km",
+  "@tripDistance": {
+    "placeholders": {
+      "distance": {"type": "String"}
+    }
+  },
+  "reportIncident": "Incident melden",
+  "nearAccident": "Bijna-ongeval",
+  "aggression": "Agressie",
+  "almostAsleep": "Bijna in slaap",
+  "technicalIssue": "Technisch probleem",
+  "other": "Overig",
+  "holdToRecord": "Houd ingedrukt om in te spreken",
+  "urgentIncident": "Urgent - Direct contact gewenst",
+  "requestCallback": "Terugbelverzoek",
+  "send": "Versturen",
+  "cancel": "Annuleren",
+  "confirm": "Bevestigen",
+  "yes": "Ja",
+  "no": "Nee",
+  "offline": "Offline - wordt gesynchroniseerd",
+  "syncing": "Synchroniseren...",
+  "syncComplete": "Gesynchroniseerd",
+  "settings": "Instellingen",
+  "language": "Taal",
+  "privacyZones": "Privézones",
+  "addPrivacyZone": "Privézone toevoegen",
+  "notifications": "Meldingen",
+  "logout": "Uitloggen",
+  "achievements": "Prestaties",
+  "streaks": "Reeksen",
+  "currentStreak": "Huidige reeks: {days} dagen",
+  "@currentStreak": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "bestStreak": "Beste reeks: {days} dagen",
+  "@bestStreak": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "goals": "Doelen",
+  "chat": "Berichten",
+  "noMessages": "Geen berichten",
+  "typeMessage": "Typ een bericht...",
+  "panicButton": "Noodknop",
+  "panicConfirm": "Weet je zeker dat je een noodmelding wilt versturen?",
+  "locationShared": "Je locatie wordt gedeeld met je manager",
+  "errorOccurred": "Er is een fout opgetreden",
+  "tryAgain": "Opnieuw proberen",
+  "noInternet": "Geen internetverbinding",
+  "kmValidationError": "Kilometerstand moet hoger zijn dan {previous}",
+  "@kmValidationError": {
+    "placeholders": {
+      "previous": {"type": "int"}
+    }
+  },
+  "checkCompleted": "Check voltooid!",
+  "safeTrip": "Goede reis!",
+  "welcomeBack": "Welkom terug, {name}!",
+  "@welcomeBack": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "home": "Home",
+  "trips": "Ritten",
+  "profile": "Profiel",
+  "quickActions": "Snelle acties",
+  "recentActivity": "Recente activiteit",
+  "noRecentActivity": "Geen recente activiteit",
+  "today": "Vandaag",
+  "yesterday": "Gisteren",
+  "thisWeek": "Deze week",
+  "loading": "Laden...",
+  "save": "Opslaan",
+  "delete": "Verwijderen",
+  "edit": "Bewerken",
+  "back": "Terug",
+  "next": "Volgende",
+  "done": "Klaar",
+  "close": "Sluiten",
+  "search": "Zoeken",
+  "noResults": "Geen resultaten",
+  "retry": "Opnieuw proberen",
+  "success": "Gelukt!",
+  "warning": "Waarschuwing",
+  "info": "Informatie",
+  "required": "Verplicht",
+  "optional": "Optioneel",
+  "km": "km",
+  "minutes": "minuten",
+  "hours": "uren",
+  "days": "dagen"
+}
