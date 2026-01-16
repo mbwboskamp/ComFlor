@@ -46,7 +46,75 @@ git config --global init.defaultBranch main
 
 ---
 
-## 2. Flutter Installeren
+## 2. Visual Studio Code Installeren (Aanbevolen)
+
+VS Code is de aanbevolen editor voor Flutter development vanwege de uitstekende Flutter extensie.
+
+### Windows
+
+1. Download VS Code van https://code.visualstudio.com/download
+2. Voer het installatieprogramma uit
+3. Selecteer tijdens installatie:
+   - "Add to PATH" (aangevinkt laten)
+   - "Add 'Open with Code' action" (optioneel maar handig)
+
+### macOS
+
+```bash
+# Via Homebrew (aanbevolen)
+brew install --cask visual-studio-code
+
+# Of download handmatig van https://code.visualstudio.com/download
+```
+
+### Linux (Ubuntu/Debian)
+
+```bash
+# Via Snap (aanbevolen)
+sudo snap install code --classic
+
+# Of via apt repository:
+sudo apt install software-properties-common apt-transport-https wget
+wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+sudo apt update
+sudo apt install code
+```
+
+### Flutter en Dart Extensies Installeren
+
+1. Open VS Code
+2. Ga naar Extensions (Ctrl+Shift+X of Cmd+Shift+X)
+3. Zoek "Flutter" en klik Install
+   - De Dart extensie wordt automatisch meegeïnstalleerd
+4. Herstart VS Code
+
+### Flutter SDK Installeren via VS Code (Alternatieve Methode)
+
+VS Code kan ook de Flutter SDK voor je downloaden:
+
+1. Open VS Code
+2. Open Command Palette: `Ctrl+Shift+P` (Windows/Linux) of `Cmd+Shift+P` (macOS)
+3. Type "Flutter: New Project" en selecteer het
+4. Klik op "Download SDK" wanneer gevraagd
+5. Kies een locatie voor de Flutter SDK
+6. Klik "Clone Flutter"
+7. Klik "Add SDK to PATH" wanneer dit verschijnt
+
+### Handige VS Code Extensies voor Flutter
+
+| Extensie | Beschrijving |
+|----------|--------------|
+| Flutter | Officiële Flutter ondersteuning |
+| Dart | Dart taalondersteuning |
+| Pubspec Assist | Dependency management |
+| Flutter Widget Snippets | Code snippets |
+| Error Lens | Inline error weergave |
+| GitLens | Git integratie |
+
+---
+
+## 3. Flutter Installeren (Handmatig)
 
 ### Windows
 
@@ -108,7 +176,7 @@ flutter doctor
 
 ---
 
-## 3. Android Studio Installeren
+## 4. Android Studio Installeren
 
 ### Alle Platforms
 
@@ -134,7 +202,7 @@ flutter doctor
 
 ---
 
-## 4. Xcode Installeren (alleen macOS, voor iOS)
+## 5. Xcode Installeren (alleen macOS, voor iOS)
 
 1. Open App Store op je Mac
 2. Zoek "Xcode" en installeer (dit kan even duren, ~12GB)
@@ -152,7 +220,7 @@ flutter doctor
 
 ---
 
-## 5. Installatie Verifiëren
+## 6. Installatie Verifiëren
 
 Voer `flutter doctor` uit om te controleren of alles correct is geïnstalleerd:
 
@@ -175,7 +243,7 @@ Los eventuele problemen op die `flutter doctor` meldt voordat je verdergaat.
 
 ---
 
-## 6. Project Setup
+## 7. Project Setup
 
 ### Clone de Repository
 
