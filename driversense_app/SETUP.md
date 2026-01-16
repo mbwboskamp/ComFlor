@@ -2,20 +2,191 @@
 
 This guide covers the complete setup for both Android and iOS platforms.
 
-## Prerequisites
+---
 
-1. **Flutter SDK**: Version 3.x or higher
-2. **Android Studio**: Latest version with Android SDK
-3. **Xcode**: Version 15+ (for iOS development on macOS)
-4. **CocoaPods**: `sudo gem install cocoapods`
+## 1. Git Installeren
 
-## Initial Setup
+### Windows
+
+1. Download Git van https://git-scm.com/download/win
+2. Voer het installatieprogramma uit
+3. Kies de standaard opties (of pas aan naar wens)
+4. Verifieer installatie:
+   ```bash
+   git --version
+   ```
+
+### macOS
 
 ```bash
-# Clone the repository
+# Via Homebrew (aanbevolen)
+brew install git
+
+# Of via Xcode Command Line Tools
+xcode-select --install
+```
+
+### Linux (Ubuntu/Debian)
+
+```bash
+sudo apt update
+sudo apt install git
+```
+
+### Git Configuratie
+
+```bash
+# Configureer je naam en e-mail (verplicht voor commits)
+git config --global user.name "Jouw Naam"
+git config --global user.email "jouw.email@example.com"
+
+# Optioneel: standaard branch naam instellen
+git config --global init.defaultBranch main
+```
+
+---
+
+## 2. Flutter Installeren
+
+### Windows
+
+1. **Download Flutter SDK**
+   - Ga naar https://docs.flutter.dev/get-started/install/windows
+   - Download de laatste stable release (zip bestand)
+
+2. **Uitpakken**
+   ```
+   Pak uit naar: C:\flutter
+   (Vermijd paden met spaties of speciale tekens)
+   ```
+
+3. **PATH instellen**
+   - Open "Omgevingsvariabelen bewerken" (zoek in Start menu)
+   - Onder "Gebruikersvariabelen", selecteer "Path" → "Bewerken"
+   - Klik "Nieuw" en voeg toe: `C:\flutter\bin`
+   - Klik OK om op te slaan
+
+4. **Verifieer installatie**
+   ```bash
+   flutter --version
+   flutter doctor
+   ```
+
+### macOS
+
+```bash
+# Via Homebrew (aanbevolen)
+brew install --cask flutter
+
+# Of handmatig:
+# 1. Download van https://docs.flutter.dev/get-started/install/macos
+# 2. Uitpakken naar ~/development/flutter
+# 3. Voeg toe aan ~/.zshrc of ~/.bash_profile:
+export PATH="$PATH:$HOME/development/flutter/bin"
+
+# Verifieer
+flutter --version
+flutter doctor
+```
+
+### Linux (Ubuntu/Debian)
+
+```bash
+# Via Snap (aanbevolen)
+sudo snap install flutter --classic
+
+# Of handmatig:
+# 1. Download van https://docs.flutter.dev/get-started/install/linux
+# 2. Uitpakken naar ~/development/flutter
+# 3. Voeg toe aan ~/.bashrc:
+export PATH="$PATH:$HOME/development/flutter/bin"
+
+# Verifieer
+flutter --version
+flutter doctor
+```
+
+---
+
+## 3. Android Studio Installeren
+
+### Alle Platforms
+
+1. Download van https://developer.android.com/studio
+2. Installeer en start Android Studio
+3. Volg de setup wizard:
+   - Selecteer "Standard" installatie
+   - Accepteer alle licenties
+
+4. **Android SDK instellen**
+   - Open Android Studio → Settings → Languages & Frameworks → Android SDK
+   - Installeer: Android SDK Platform 34, Android SDK Build-Tools
+   - Noteer het SDK pad (bijv. `C:\Users\<naam>\AppData\Local\Android\Sdk`)
+
+5. **Flutter plugin installeren**
+   - Settings → Plugins → Marketplace
+   - Zoek "Flutter" en installeer (Dart wordt automatisch meegeïnstalleerd)
+
+6. **Android licenties accepteren**
+   ```bash
+   flutter doctor --android-licenses
+   ```
+
+---
+
+## 4. Xcode Installeren (alleen macOS, voor iOS)
+
+1. Open App Store op je Mac
+2. Zoek "Xcode" en installeer (dit kan even duren, ~12GB)
+3. Open Xcode eenmaal om licentie te accepteren
+4. Installeer command line tools:
+   ```bash
+   sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+   sudo xcodebuild -runFirstLaunch
+   ```
+
+5. Installeer CocoaPods:
+   ```bash
+   sudo gem install cocoapods
+   ```
+
+---
+
+## 5. Installatie Verifiëren
+
+Voer `flutter doctor` uit om te controleren of alles correct is geïnstalleerd:
+
+```bash
+flutter doctor -v
+```
+
+Je zou dit moeten zien (alle groene vinkjes):
+
+```
+[✓] Flutter (Channel stable, 3.x.x)
+[✓] Android toolchain - develop for Android devices
+[✓] Xcode - develop for iOS and macOS (alleen op Mac)
+[✓] Android Studio
+[✓] VS Code (optioneel)
+[✓] Connected device
+```
+
+Los eventuele problemen op die `flutter doctor` meldt voordat je verdergaat.
+
+---
+
+## 6. Project Setup
+
+### Clone de Repository
+
+```bash
 git clone https://github.com/your-org/driversense_app.git
 cd driversense_app
+```
 
+### Flutter Dependencies Installeren
+
+```bash
 # Install Flutter dependencies
 flutter pub get
 
