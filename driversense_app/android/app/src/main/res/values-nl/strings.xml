@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DriverSense</string>
+
+    <!-- Notification channels -->
+    <string name="channel_general_name">Algemeen</string>
+    <string name="channel_general_description">Algemene meldingen</string>
+
+    <string name="channel_tracking_name">Rit Tracking</string>
+    <string name="channel_tracking_description">Meldingen voor actieve rit tracking</string>
+
+    <string name="channel_incident_name">Incidenten</string>
+    <string name="channel_incident_description">Incident en veiligheidswaarschuwingen</string>
+
+    <string name="channel_chat_name">Berichten</string>
+    <string name="channel_chat_description">Chatberichten van managers</string>
+
+    <!-- Background service -->
+    <string name="foreground_service_title">DriverSense volgt je rit</string>
+    <string name="foreground_service_content">Tik om de app te openen</string>
+
+    <!-- Permissions rationale -->
+    <string name="location_permission_rationale">Locatietoestemming is vereist om je rit te volgen en de veiligheid van de chauffeur te garanderen.</string>
+    <string name="camera_permission_rationale">Cameratoestemming is vereist om foto\'s te maken voor incidentrapporten.</string>
+    <string name="microphone_permission_rationale">Microfoontoestemming is vereist om spraakmemo\'s op te nemen voor incidentrapporten.</string>
+</resources>

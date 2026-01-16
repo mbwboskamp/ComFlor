@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand Color -->
+    <color name="ic_launcher_background">#3887F5</color>
+
+    <!-- Theme Colors -->
+    <color name="primary">#3887F5</color>
+    <color name="primary_dark">#2E6FD1</color>
+    <color name="accent">#FF9500</color>
+
+    <!-- Status Bar -->
+    <color name="status_bar_color">#3887F5</color>
+
+    <!-- Notification -->
+    <color name="notification_color">#3887F5</color>
+</resources>

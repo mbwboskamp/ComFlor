@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DriverSense</string>
+
+    <!-- Notification channels -->
+    <string name="channel_general_name">Général</string>
+    <string name="channel_general_description">Notifications générales</string>
+
+    <string name="channel_tracking_name">Suivi de trajet</string>
+    <string name="channel_tracking_description">Notifications pour le suivi de trajet actif</string>
+
+    <string name="channel_incident_name">Incidents</string>
+    <string name="channel_incident_description">Alertes d\'incident et de sécurité</string>
+
+    <string name="channel_chat_name">Messages</string>
+    <string name="channel_chat_description">Messages de chat des managers</string>
+
+    <!-- Background service -->
+    <string name="foreground_service_title">DriverSense suit votre trajet</string>
+    <string name="foreground_service_content">Appuyez pour ouvrir l\'application</string>
+
+    <!-- Permissions rationale -->
+    <string name="location_permission_rationale">L\'autorisation de localisation est requise pour suivre votre trajet et assurer la sécurité du conducteur.</string>
+    <string name="camera_permission_rationale">L\'autorisation de la caméra est requise pour capturer des photos pour les rapports d\'incident.</string>
+    <string name="microphone_permission_rationale">L\'autorisation du microphone est requise pour enregistrer des mémos vocaux pour les rapports d\'incident.</string>
+</resources>
