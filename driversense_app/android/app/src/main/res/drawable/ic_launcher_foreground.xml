@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- DriverSense Logo Placeholder -->
+    <!-- Replace with actual logo vector -->
+
+    <!-- Circle background -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"/>
+
+    <!-- Steering wheel icon -->
+    <path
+        android:fillColor="#3887F5"
+        android:pathData="M54,30c-13.3,0 -24,10.7 -24,24s10.7,24 24,24s24,-10.7 24,-24S67.3,30 54,30zM54,72c-9.9,0 -18,-8.1 -18,-18s8.1,-18 18,-18s18,8.1 18,18S63.9,72 54,72z"/>
+
+    <!-- Center circle -->
+    <path
+        android:fillColor="#3887F5"
+        android:pathData="M54,48c-3.3,0 -6,2.7 -6,6s2.7,6 6,6s6,-2.7 6,-6S57.3,48 54,48z"/>
+
+    <!-- Spokes -->
+    <path
+        android:fillColor="#3887F5"
+        android:pathData="M54,36v12M54,60v12M42,54h12M60,54h12"
+        android:strokeWidth="4"
+        android:strokeColor="#3887F5"/>
+</vector>
