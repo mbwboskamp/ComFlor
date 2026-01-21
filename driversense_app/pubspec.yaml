@@ -74,6 +74,16 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
+# Override record package dependencies to fix Linux compatibility
+# record_linux 0.7.1 doesn't implement startStream from newer platform_interface
+dependency_overrides:
+  record_platform_interface: 1.0.2
+  record_linux: 0.7.1
+  record_web: 1.0.3
+  record_windows: 1.0.3
+  record_android: 1.0.4
+  record_darwin: 1.0.4
+
 flutter:
   uses-material-design: true
   generate: true
