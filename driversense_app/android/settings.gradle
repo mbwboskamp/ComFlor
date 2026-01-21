@@ -1,11 +1,9 @@
 pluginManagement {
-    def flutterSdkPath = {
-        def properties = new Properties()
-        file("local.properties").withInputStream { properties.load(it) }
-        def flutterSdkPath = properties.getProperty("flutter.sdk")
-        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
-        return flutterSdkPath
-    }()
+    def localProperties = new Properties()
+    file("local.properties").withInputStream { localProperties.load(it) }
+
+    def flutterSdkPath = localProperties.getProperty("flutter.sdk")
+    assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
 
     includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
@@ -14,6 +12,15 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+}
+
+// Load SDK_REGISTRY_TOKEN from local.properties for Mapbox
+def localPropertiesFile = file("local.properties")
+def sdkRegistryToken = ""
+if (localPropertiesFile.exists()) {
+    def props = new Properties()
+    localPropertiesFile.withInputStream { props.load(it) }
+    sdkRegistryToken = props.getProperty("SDK_REGISTRY_TOKEN", System.getenv("SDK_REGISTRY_TOKEN") ?: "")
 }
 
 plugins {
@@ -34,7 +41,7 @@ dependencyResolutionManagement {
             }
             credentials {
                 username = "mapbox"
-                password = providers.gradleProperty("SDK_REGISTRY_TOKEN").orElse(System.getenv("SDK_REGISTRY_TOKEN") ?: "").get()
+                password = sdkRegistryToken
             }
         }
     }
