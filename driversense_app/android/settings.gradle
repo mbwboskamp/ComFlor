@@ -21,7 +21,7 @@ plugins {
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
 
     // Load SDK_REGISTRY_TOKEN from local.properties for Mapbox
     def localPropertiesFile = file("local.properties")
