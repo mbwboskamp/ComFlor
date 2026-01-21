@@ -78,6 +78,9 @@ abstract class AppLocalizations {
 
   // Welcome
   String welcomeBack(String name);
+
+  // Connectivity
+  String get offline;
 }
 
 /// Default implementation with Dutch translations
@@ -198,6 +201,9 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String welcomeBack(String name) => 'Welkom terug, $name!';
+
+  @override
+  String get offline => 'Offline - wijzigingen worden gesynchroniseerd';
 }
 
 /// English translations
@@ -318,6 +324,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String welcomeBack(String name) => 'Welcome back, $name!';
+
+  @override
+  String get offline => 'Offline - changes will sync when connected';
 }
 
 /// Localization delegate

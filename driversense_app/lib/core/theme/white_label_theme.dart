@@ -87,10 +87,9 @@ class WhiteLabelTheme {
       onTertiary: _getContrastColor(accentColor),
       error: AppColors.error,
       onError: Colors.white,
-      background: background,
-      onBackground: onBackground,
       surface: surface,
       onSurface: onSurface,
+      surfaceContainerHighest: background,
     );
 
     return ThemeData(
