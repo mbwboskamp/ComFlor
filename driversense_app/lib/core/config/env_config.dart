@@ -20,10 +20,11 @@ class EnvConfig {
   });
 
   /// Development environment configuration
+  /// Note: 10.0.2.2 is the special IP for Android emulator to reach host's localhost
   static const dev = EnvConfig._(
     environment: Environment.dev,
-    apiBaseUrl: 'http://localhost:8000/api/v1',
-    wsBaseUrl: 'ws://localhost:8001',
+    apiBaseUrl: 'http://10.0.2.2:8000/api/v1',
+    wsBaseUrl: 'ws://10.0.2.2:8001',
     mapboxToken: 'pk.dev_token_placeholder',
     enableLogging: true,
     enableAnalytics: false,

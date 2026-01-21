@@ -6,7 +6,7 @@ import 'package:driversense_app/core/config/env_config.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await bootstrap(EnvConfig.prod);
+  await bootstrap(EnvConfig.dev);
 
   runApp(const DriverSenseApp());
 }
