@@ -112,7 +112,7 @@ class LanguagePage extends StatelessWidget {
   }
 
   void _selectLanguage(BuildContext context, String languageCode) {
-    context.read<AuthBloc>().add(AuthLocaleChanged(Locale(languageCode)));
+    context.read<AuthBloc>().add(AuthLocaleChanged(locale: Locale(languageCode)));
     context.showSuccessSnackBar('Taal gewijzigd');
     context.pop();
   }

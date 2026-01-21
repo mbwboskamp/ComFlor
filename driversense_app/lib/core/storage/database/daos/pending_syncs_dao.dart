@@ -47,10 +47,13 @@ class PendingSyncsDao extends DatabaseAccessor<AppDatabase> with _$PendingSyncsD
   }
 
   /// Update retry info after failed attempt
-  Future<void> recordFailedAttempt(int id, String error) {
-    return (update(pendingSyncs)..where((t) => t.id.equals(id))).write(
+  Future<void> recordFailedAttempt(int id, String error) async {
+    // First get the current retry count
+    final sync = await (select(pendingSyncs)..where((t) => t.id.equals(id))).getSingle();
+
+    await (update(pendingSyncs)..where((t) => t.id.equals(id))).write(
       PendingSyncsCompanion(
-        retryCount: pendingSyncs.retryCount + const Constant(1),
+        retryCount: Value(sync.retryCount + 1),
         lastAttemptAt: Value(DateTime.now()),
         lastError: Value(error),
       ),

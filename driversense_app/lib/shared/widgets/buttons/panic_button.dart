@@ -3,17 +3,27 @@ import 'package:flutter/services.dart';
 import 'package:driversense_app/core/theme/app_colors.dart';
 import 'package:driversense_app/core/theme/app_spacing.dart';
 
+/// Panic button size options
+enum PanicButtonSize {
+  small(60),
+  medium(80),
+  large(100);
+
+  final double value;
+  const PanicButtonSize(this.value);
+}
+
 /// Large panic/emergency button
 class PanicButton extends StatefulWidget {
   final VoidCallback onPressed;
   final bool isLoading;
-  final double size;
+  final PanicButtonSize size;
 
   const PanicButton({
     super.key,
     required this.onPressed,
     this.isLoading = false,
-    this.size = 100,
+    this.size = PanicButtonSize.large,
   });
 
   @override
@@ -76,8 +86,8 @@ class _PanicButtonState extends State<PanicButton>
             Transform.scale(
               scale: _pulseAnimation.value,
               child: Container(
-                width: widget.size + 20,
-                height: widget.size + 20,
+                width: widget.size.value + 20,
+                height: widget.size.value + 20,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppColors.error.withOpacity(0.2),
@@ -90,8 +100,8 @@ class _PanicButtonState extends State<PanicButton>
               child: GestureDetector(
                 onTap: widget.isLoading ? null : _onTap,
                 child: Container(
-                  width: widget.size,
-                  height: widget.size,
+                  width: widget.size.value,
+                  height: widget.size.value,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.error,

@@ -10,6 +10,8 @@ class PrimaryButton extends StatelessWidget {
   final bool isLoading;
   final bool fullWidth;
   final ButtonSize size;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
 
   const PrimaryButton({
     super.key,
@@ -19,11 +21,15 @@ class PrimaryButton extends StatelessWidget {
     this.isLoading = false,
     this.fullWidth = true,
     this.size = ButtonSize.large,
+    this.backgroundColor,
+    this.foregroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final bgColor = backgroundColor ?? theme.colorScheme.primary;
+    final fgColor = foregroundColor ?? theme.colorScheme.onPrimary;
 
     return SizedBox(
       width: fullWidth ? double.infinity : null,
@@ -31,10 +37,10 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: theme.colorScheme.primary,
-          foregroundColor: theme.colorScheme.onPrimary,
-          disabledBackgroundColor: theme.colorScheme.primary.withOpacity(0.5),
-          disabledForegroundColor: theme.colorScheme.onPrimary.withOpacity(0.5),
+          backgroundColor: bgColor,
+          foregroundColor: fgColor,
+          disabledBackgroundColor: bgColor.withOpacity(0.5),
+          disabledForegroundColor: fgColor.withOpacity(0.5),
           shape: RoundedRectangleBorder(
             borderRadius: AppSpacing.borderRadiusMd,
           ),
