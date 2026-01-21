@@ -61,6 +61,7 @@ dependencies:
   cached_network_image: ^3.3.0
   flutter_svg: ^2.0.9
   lottie: ^2.7.0
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -86,14 +87,4 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/animations/
-
-  fonts:
-    - family: Inter
-      fonts:
-        - asset: assets/fonts/Inter-Regular.ttf
-        - asset: assets/fonts/Inter-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Inter-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Inter-Bold.ttf
-          weight: 700
+  # Fonts loaded via google_fonts package instead of bundled assets
