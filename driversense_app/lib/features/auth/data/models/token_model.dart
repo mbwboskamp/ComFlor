@@ -71,11 +71,13 @@ class LoginResponseModel {
   });
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    // Check if 2FA is required
-    if (json['requires_2fa'] == true) {
+    // Check if 2FA is required - server returns status: 'requires_2fa'
+    if (json['status'] == 'requires_2fa' || json['requires_2fa'] == true) {
       return LoginResponseModel(
         requires2FA: true,
-        sessionToken: json['session_token'] as String?,
+        // Server sends sessionToken (camelCase) or session_token (snake_case)
+        sessionToken: json['session_token'] as String? ??
+                      json['sessionToken'] as String?,
       );
     }
 
