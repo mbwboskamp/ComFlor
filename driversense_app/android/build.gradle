@@ -50,6 +50,17 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
+// Ensure Flutter storage repository is added to all subprojects after evaluation
+subprojects {
+    afterEvaluate { project ->
+        project.repositories {
+            maven {
+                url = uri('https://storage.googleapis.com/download.flutter.io')
+            }
+        }
+    }
+}
+
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
