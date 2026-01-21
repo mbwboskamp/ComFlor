@@ -35,6 +35,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // Flutter engine artifacts
+        maven {
+            url 'https://storage.googleapis.com/download.flutter.io'
+        }
+        // Mapbox SDK
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
             authentication {
