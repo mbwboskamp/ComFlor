@@ -22,6 +22,9 @@
   "selectMood": "Hoe voel je je?",
   "confirmAndStart": "Bevestigen en starten",
   "tripActive": "Rit actief",
+  "tripEnded": "Rit beëindigd",
+  "endTrip": "Rit beëindigen",
+  "activeTrip": "Actieve rit",
   "tripDuration": "Duur: {duration}",
   "@tripDuration": {
     "placeholders": {
