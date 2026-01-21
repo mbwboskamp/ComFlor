@@ -74,6 +74,10 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
+# Override record_linux to version that implements startStream
+dependency_overrides:
+  record_linux: ^1.2.1
+
 flutter:
   uses-material-design: true
   generate: true
