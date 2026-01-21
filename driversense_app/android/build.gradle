@@ -1,6 +1,9 @@
 buildscript {
     ext.kotlin_version = '2.1.0'
     repositories {
+        maven {
+            url 'https://storage.googleapis.com/download.flutter.io'
+        }
         google()
         mavenCentral()
     }
@@ -22,12 +25,13 @@ if (localPropertiesFile.exists()) {
 
 allprojects {
     repositories {
-        google()
-        mavenCentral()
-        // Flutter engine artifacts - required for all subprojects
+        // Flutter engine artifacts - MUST be first
         maven {
             url 'https://storage.googleapis.com/download.flutter.io'
+            allowInsecureProtocol false
         }
+        google()
+        mavenCentral()
         // Mapbox SDK
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
@@ -48,17 +52,6 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(':app')
-}
-
-// Ensure Flutter storage repository is added to all subprojects after evaluation
-subprojects {
-    afterEvaluate { project ->
-        project.repositories {
-            maven {
-                url = uri('https://storage.googleapis.com/download.flutter.io')
-            }
-        }
-    }
 }
 
 tasks.register("clean", Delete) {

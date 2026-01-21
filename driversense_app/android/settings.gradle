@@ -11,6 +11,9 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven {
+            url = uri('https://storage.googleapis.com/download.flutter.io')
+        }
     }
 }
 
@@ -18,18 +21,6 @@ plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
     id "com.android.application" version "8.6.0" apply false
     id "org.jetbrains.kotlin.android" version "2.1.0" apply false
-}
-
-// Force Flutter storage repository on ALL projects before they configure
-gradle.beforeProject { project ->
-    project.repositories {
-        maven {
-            url = uri('https://storage.googleapis.com/download.flutter.io')
-            content {
-                includeGroup "io.flutter"
-            }
-        }
-    }
 }
 
 include ":app"
