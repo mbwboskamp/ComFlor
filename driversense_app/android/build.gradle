@@ -14,37 +14,7 @@ buildscript {
     }
 }
 
-// Load SDK_REGISTRY_TOKEN from local.properties for Mapbox
-def localPropertiesFile = rootProject.file('local.properties')
-def sdkRegistryToken = ""
-if (localPropertiesFile.exists()) {
-    def props = new Properties()
-    localPropertiesFile.withInputStream { props.load(it) }
-    sdkRegistryToken = props.getProperty("SDK_REGISTRY_TOKEN", System.getenv("SDK_REGISTRY_TOKEN") ?: "")
-}
-
-allprojects {
-    repositories {
-        // Flutter engine artifacts - MUST be first
-        maven {
-            url 'https://storage.googleapis.com/download.flutter.io'
-            allowInsecureProtocol false
-        }
-        google()
-        mavenCentral()
-        // Mapbox SDK
-        maven {
-            url 'https://api.mapbox.com/downloads/v2/releases/maven'
-            authentication {
-                basic(BasicAuthentication)
-            }
-            credentials {
-                username = "mapbox"
-                password = sdkRegistryToken
-            }
-        }
-    }
-}
+// Repositories are centralized in settings.gradle via dependencyResolutionManagement
 
 rootProject.buildDir = '../build'
 subprojects {
