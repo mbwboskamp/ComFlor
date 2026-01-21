@@ -62,14 +62,14 @@ class CheckLocalDatasourceImpl implements CheckLocalDatasource {
 
     return domain.Check(
       id: check.id,
-      tripId: check.tripId,
-      driverId: check.driverId,
-      type: check.checkType == 'start' ? domain.CheckType.start : domain.CheckType.end,
-      status: _parseStatus(check.status),
-      answers: [], // Would need to load from a separate table
-      startedAt: check.startedAt,
+      tripId: check.tripId ?? '',
+      driverId: '', // Driver ID not stored in local database
+      type: check.type == 'start' ? domain.CheckType.start : domain.CheckType.end,
+      status: check.isSynced ? domain.CheckStatus.completed : domain.CheckStatus.pending,
+      answers: [], // Would need to parse from check.answers JSON
+      startedAt: check.offlineCreatedAt ?? check.completedAt,
       completedAt: check.completedAt,
-      notes: check.notes,
+      notes: null, // Notes not stored in local database
     );
   }
 
@@ -86,18 +86,18 @@ class CheckLocalDatasourceImpl implements CheckLocalDatasource {
 
     return checks.map((check) => domain.Check(
       id: check.id,
-      tripId: check.tripId,
-      driverId: check.driverId,
-      type: check.checkType == 'start' ? domain.CheckType.start : domain.CheckType.end,
-      status: _parseStatus(check.status),
-      answers: [],
-      startedAt: check.startedAt,
+      tripId: check.tripId ?? '',
+      driverId: '', // Driver ID not stored in local database
+      type: check.type == 'start' ? domain.CheckType.start : domain.CheckType.end,
+      status: check.isSynced ? domain.CheckStatus.completed : domain.CheckStatus.pending,
+      answers: [], // Would need to parse from check.answers JSON
+      startedAt: check.offlineCreatedAt ?? check.completedAt,
       completedAt: check.completedAt,
-      notes: check.notes,
+      notes: null, // Notes not stored in local database
     )).toList();
   }
 
-  Map<int, String> _parseScaleLabels(String json) {
+  Map<int, String> _parseScaleLabels(String? json) {
     // Parse JSON string to map
     // For now, return default labels
     return {
@@ -107,20 +107,5 @@ class CheckLocalDatasourceImpl implements CheckLocalDatasource {
       4: 'Goed',
       5: 'Uitstekend',
     };
-  }
-
-  domain.CheckStatus _parseStatus(String status) {
-    switch (status) {
-      case 'pending':
-        return domain.CheckStatus.pending;
-      case 'in_progress':
-        return domain.CheckStatus.inProgress;
-      case 'completed':
-        return domain.CheckStatus.completed;
-      case 'cancelled':
-        return domain.CheckStatus.cancelled;
-      default:
-        return domain.CheckStatus.pending;
-    }
   }
 }

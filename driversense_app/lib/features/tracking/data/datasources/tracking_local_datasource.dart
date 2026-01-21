@@ -70,9 +70,11 @@ class TrackingLocalDatasourceImpl implements TrackingLocalDatasource {
   @override
   Future<List<domain.Trip>> getTripHistory({int? limit, int? offset}) async {
     final dao = _database.tripsDao;
-    final trips = await dao.getRecentTrips(limit: limit ?? 20);
+    final trips = await dao.getTripsByStatus('completed');
 
-    return trips.map((t) => _tripToDomain(t)).toList();
+    // Apply limit manually if needed
+    final limitedTrips = limit != null ? trips.take(limit).toList() : trips;
+    return limitedTrips.map((t) => _tripToDomain(t)).toList();
   }
 
   @override
@@ -84,58 +86,61 @@ class TrackingLocalDatasourceImpl implements TrackingLocalDatasource {
   @override
   Future<List<domain.TrackPoint>> getTrackPoints(String tripId) async {
     final dao = _database.trackPointsDao;
-    final points = await dao.getTrackPointsForTrip(tripId);
+    final points = await dao.getPointsByTripId(tripId);
 
     return points.map((p) => domain.TrackPoint(
-      id: p.id,
+      id: p.id.toString(),
       tripId: p.tripId,
       latitude: p.latitude,
       longitude: p.longitude,
       altitude: p.altitude,
-      speed: p.speed,
+      speed: p.speedKmh,
       heading: p.heading,
       accuracy: p.accuracy,
       recordedAt: p.recordedAt,
-      isInPrivacyZone: p.isInPrivacyZone,
+      isInPrivacyZone: p.isPrivate,
     )).toList();
   }
 
   @override
   Future<List<domain.TrackPoint>> getPendingTrackPoints(String tripId) async {
     final dao = _database.trackPointsDao;
-    final points = await dao.getUnsyncedTrackPoints(tripId);
+    // Get all unsynced points and filter by tripId
+    final allUnsynced = await dao.getUnsyncedPoints();
+    final points = allUnsynced.where((p) => p.tripId == tripId).toList();
 
     return points.map((p) => domain.TrackPoint(
-      id: p.id,
+      id: p.id.toString(),
       tripId: p.tripId,
       latitude: p.latitude,
       longitude: p.longitude,
       altitude: p.altitude,
-      speed: p.speed,
+      speed: p.speedKmh,
       heading: p.heading,
       accuracy: p.accuracy,
       recordedAt: p.recordedAt,
-      isInPrivacyZone: p.isInPrivacyZone,
+      isInPrivacyZone: p.isPrivate,
     )).toList();
   }
 
   @override
   Future<void> markTrackPointsSynced(List<String> trackPointIds) async {
     final dao = _database.trackPointsDao;
-    for (final id in trackPointIds) {
-      await dao.markAsSynced(id);
+    final intIds = trackPointIds.map((id) => int.tryParse(id)).whereType<int>();
+    if (intIds.isNotEmpty) {
+      await dao.markAsSynced(intIds);
     }
   }
 
   @override
   Future<List<domain.PrivacyZone>> getPrivacyZones() async {
     final dao = _database.privacyZonesDao;
-    final zones = await dao.getAllPrivacyZones();
+    final zones = await dao.getAllZones();
 
     return zones.map((z) => domain.PrivacyZone(
       id: z.id,
-      name: z.name,
-      address: z.address ?? '',
+      name: z.name ?? '',
+      address: '', // Address not stored in local database
       latitude: z.latitude,
       longitude: z.longitude,
       radius: z.radiusMeters,
@@ -154,18 +159,18 @@ class TrackingLocalDatasourceImpl implements TrackingLocalDatasource {
   domain.Trip _tripToDomain(Trip dbTrip) {
     return domain.Trip(
       id: dbTrip.id,
-      driverId: dbTrip.driverId,
+      driverId: '', // Driver ID not stored in local database
       vehicleId: dbTrip.vehicleId,
       status: domain.TripStatus.values.firstWhere(
         (s) => s.name == dbTrip.status,
         orElse: () => domain.TripStatus.active,
       ),
-      startedAt: dbTrip.startedAt,
-      endedAt: dbTrip.endedAt,
-      startLatitude: dbTrip.startLatitude,
-      startLongitude: dbTrip.startLongitude,
-      endLatitude: dbTrip.endLatitude,
-      endLongitude: dbTrip.endLongitude,
+      startedAt: dbTrip.startTime,
+      endedAt: dbTrip.endTime,
+      startLatitude: dbTrip.startLat,
+      startLongitude: dbTrip.startLng,
+      endLatitude: dbTrip.endLat,
+      endLongitude: dbTrip.endLng,
       distanceKm: dbTrip.distanceMeters != null
           ? dbTrip.distanceMeters! / 1000
           : null,
