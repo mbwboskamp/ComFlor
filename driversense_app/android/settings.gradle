@@ -27,16 +27,17 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url 'https://api.mapbox.com/downloads/v2/releases/maven'
-            authentication {
-                basic(BasicAuthentication)
-            }
-            credentials {
-                username = "mapbox"
-                password = providers.gradleProperty("MAPBOX_DOWNLOADS_TOKEN").orElse(System.getenv("MAPBOX_DOWNLOADS_TOKEN") ?: "").get()
-            }
-        }
+        // Mapbox Maven repository - uncomment when mapbox_maps_flutter is enabled
+        // maven {
+        //     url 'https://api.mapbox.com/downloads/v2/releases/maven'
+        //     authentication {
+        //         basic(BasicAuthentication)
+        //     }
+        //     credentials {
+        //         username = "mapbox"
+        //         password = providers.gradleProperty("MAPBOX_DOWNLOADS_TOKEN").orElse(System.getenv("MAPBOX_DOWNLOADS_TOKEN") ?: "").get()
+        //     }
+        // }
     }
 }
 
