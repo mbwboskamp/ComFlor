@@ -44,7 +44,7 @@ dependencies:
 
   # Media
   image_picker: ^1.0.4
-  record: ^5.0.4
+  record: ^5.2.0
   speech_to_text: ^6.3.0
   flutter_tts: ^3.8.5
 

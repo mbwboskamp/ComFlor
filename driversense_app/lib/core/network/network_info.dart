@@ -25,17 +25,25 @@ class NetworkInfoImpl implements NetworkInfo {
     });
   }
 
-  bool _isConnectedFromResult(List<ConnectivityResult> results) {
-    return results.any((result) =>
-        result == ConnectivityResult.mobile ||
-        result == ConnectivityResult.wifi ||
-        result == ConnectivityResult.ethernet);
+  bool _isConnectedFromResult(dynamic result) {
+    // Handle both single ConnectivityResult and List<ConnectivityResult>
+    if (result is List<ConnectivityResult>) {
+      return result.any((r) =>
+          r == ConnectivityResult.mobile ||
+          r == ConnectivityResult.wifi ||
+          r == ConnectivityResult.ethernet);
+    } else if (result is ConnectivityResult) {
+      return result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi ||
+          result == ConnectivityResult.ethernet;
+    }
+    return false;
   }
 
   @override
   Future<bool> get isConnected async {
-    final results = await _connectivity.checkConnectivity();
-    return _isConnectedFromResult(results);
+    final result = await _connectivity.checkConnectivity();
+    return _isConnectedFromResult(result);
   }
 
   @override
