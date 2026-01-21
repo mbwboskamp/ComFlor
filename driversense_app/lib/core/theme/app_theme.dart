@@ -83,7 +83,7 @@ class AppTheme {
           color: onSurface,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: AppSpacing.borderRadiusMd,
@@ -193,7 +193,7 @@ class AppTheme {
         ),
         behavior: SnackBarBehavior.floating,
       ),
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: surface,
         elevation: 8,
         shape: RoundedRectangleBorder(
@@ -275,7 +275,7 @@ class AppTheme {
         circularTrackColor: primary.withOpacity(0.2),
         linearTrackColor: primary.withOpacity(0.2),
       ),
-      tabBarTheme: TabBarTheme(
+      tabBarTheme: TabBarThemeData(
         labelColor: primary,
         unselectedLabelColor: AppColors.textSecondary,
         labelStyle: AppTypography.labelLarge,
