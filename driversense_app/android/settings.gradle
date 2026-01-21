@@ -20,37 +20,4 @@ plugins {
     id "org.jetbrains.kotlin.android" version "2.1.0" apply false
 }
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
-
-    // Load SDK_REGISTRY_TOKEN from local.properties for Mapbox
-    def localPropertiesFile = file("local.properties")
-    def sdkRegistryToken = ""
-    if (localPropertiesFile.exists()) {
-        def props = new Properties()
-        localPropertiesFile.withInputStream { props.load(it) }
-        sdkRegistryToken = props.getProperty("SDK_REGISTRY_TOKEN", System.getenv("SDK_REGISTRY_TOKEN") ?: "")
-    }
-
-    repositories {
-        google()
-        mavenCentral()
-        // Flutter engine artifacts
-        maven {
-            url 'https://storage.googleapis.com/download.flutter.io'
-        }
-        // Mapbox SDK
-        maven {
-            url 'https://api.mapbox.com/downloads/v2/releases/maven'
-            authentication {
-                basic(BasicAuthentication)
-            }
-            credentials {
-                username = "mapbox"
-                password = sdkRegistryToken
-            }
-        }
-    }
-}
-
 include ":app"
