@@ -37,7 +37,7 @@ dependencies:
   # Location & Maps
   geolocator: ^10.1.0
   flutter_background_service: ^5.0.5
-  # mapbox_maps_flutter: ^1.0.0  # TODO: Re-enable when Mapbox token is configured
+  mapbox_maps_flutter: ^1.0.0
 
   # Forms
   reactive_forms: ^16.1.1
