@@ -14,15 +14,6 @@ pluginManagement {
     }
 }
 
-// Load SDK_REGISTRY_TOKEN from local.properties for Mapbox
-def localPropertiesFile = file("local.properties")
-def sdkRegistryToken = ""
-if (localPropertiesFile.exists()) {
-    def props = new Properties()
-    localPropertiesFile.withInputStream { props.load(it) }
-    sdkRegistryToken = props.getProperty("SDK_REGISTRY_TOKEN", System.getenv("SDK_REGISTRY_TOKEN") ?: "")
-}
-
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
     id "com.android.application" version "8.6.0" apply false
@@ -31,6 +22,16 @@ plugins {
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+
+    // Load SDK_REGISTRY_TOKEN from local.properties for Mapbox
+    def localPropertiesFile = file("local.properties")
+    def sdkRegistryToken = ""
+    if (localPropertiesFile.exists()) {
+        def props = new Properties()
+        localPropertiesFile.withInputStream { props.load(it) }
+        sdkRegistryToken = props.getProperty("SDK_REGISTRY_TOKEN", System.getenv("SDK_REGISTRY_TOKEN") ?: "")
+    }
+
     repositories {
         google()
         mavenCentral()
