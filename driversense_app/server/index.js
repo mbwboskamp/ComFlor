@@ -137,15 +137,17 @@ app.post('/api/v1/auth/login', async (req, res) => {
 
     return res.json({
       status: 'requires_consent',
-      accessToken,
-      refreshToken,
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      token_type: 'bearer',
+      expires_in: 3600,
       user: {
         id: user.id,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        first_name: user.firstName,
+        last_name: user.lastName,
         role: user.role,
-        companyId: user.companyId,
+        company_id: user.companyId,
         language: user.language,
       },
     });
@@ -156,18 +158,20 @@ app.post('/api/v1/auth/login', async (req, res) => {
 
   res.json({
     status: 'authenticated',
-    accessToken,
-    refreshToken,
+    access_token: accessToken,
+    refresh_token: refreshToken,
+    token_type: 'bearer',
+    expires_in: 3600,
     user: {
       id: user.id,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      first_name: user.firstName,
+      last_name: user.lastName,
       role: user.role,
-      companyId: user.companyId,
+      company_id: user.companyId,
       language: user.language,
-      phoneNumber: user.phoneNumber,
-      profileImageUrl: user.profileImageUrl,
+      phone_number: user.phoneNumber,
+      avatar_url: user.profileImageUrl,
     },
   });
 });
@@ -193,15 +197,17 @@ app.post('/api/v1/auth/verify-2fa', (req, res) => {
 
   res.json({
     status: 'authenticated',
-    accessToken,
-    refreshToken,
+    access_token: accessToken,
+    refresh_token: refreshToken,
+    token_type: 'bearer',
+    expires_in: 3600,
     user: {
       id: user.id,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      first_name: user.firstName,
+      last_name: user.lastName,
       role: user.role,
-      companyId: user.companyId,
+      company_id: user.companyId,
       language: user.language,
     },
   });
@@ -215,7 +221,12 @@ app.post('/api/v1/auth/refresh', (req, res) => {
     const decoded = jwt.verify(refresh_token, JWT_REFRESH_SECRET);
     const { accessToken, refreshToken } = generateTokens(decoded.userId);
 
-    res.json({ accessToken, refreshToken });
+    res.json({
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      token_type: 'bearer',
+      expires_in: 3600,
+    });
   } catch {
     res.status(401).json({ error: 'InvalidToken', message: 'Invalid refresh token' });
   }
@@ -237,13 +248,13 @@ app.get('/api/v1/auth/profile', authMiddleware, (req, res) => {
   res.json({
     id: user.id,
     email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
+    first_name: user.firstName,
+    last_name: user.lastName,
     role: user.role,
-    companyId: user.companyId,
+    company_id: user.companyId,
     language: user.language,
-    phoneNumber: user.phoneNumber,
-    profileImageUrl: user.profileImageUrl,
+    phone_number: user.phoneNumber,
+    avatar_url: user.profileImageUrl,
   });
 });
 
@@ -265,13 +276,13 @@ app.patch('/api/v1/auth/profile', authMiddleware, (req, res) => {
   res.json({
     id: user.id,
     email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
+    first_name: user.firstName,
+    last_name: user.lastName,
     role: user.role,
-    companyId: user.companyId,
+    company_id: user.companyId,
     language: user.language,
-    phoneNumber: user.phoneNumber,
-    profileImageUrl: user.profileImageUrl,
+    phone_number: user.phoneNumber,
+    avatar_url: user.profileImageUrl,
   });
 });
 

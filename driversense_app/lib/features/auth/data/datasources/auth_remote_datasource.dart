@@ -205,6 +205,11 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     if (error is AppException) {
       return error;
     }
+    if (error is FormatException) {
+      return ServerException(
+        message: 'Invalid response format: ${error.message}',
+      );
+    }
     return ServerException(
       message: error.toString(),
     );

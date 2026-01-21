@@ -17,9 +17,12 @@ class UserModel extends User {
 
   /// Create from JSON
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    final id = json['id']?.toString() ?? '';
+    final email = json['email'] as String? ?? '';
+
     return UserModel(
-      id: json['id'] as String,
-      email: json['email'] as String,
+      id: id,
+      email: email,
       firstName: json['first_name'] as String? ?? '',
       lastName: json['last_name'] as String? ?? '',
       role: json['role'] as String? ?? 'driver',
@@ -28,7 +31,7 @@ class UserModel extends User {
       phoneNumber: json['phone_number'] as String?,
       avatarUrl: json['avatar_url'] as String?,
       createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'] as String)
+          ? DateTime.tryParse(json['created_at'].toString())
           : null,
     );
   }

@@ -13,10 +13,20 @@ class TokenModel extends AuthTokens {
 
   /// Create from JSON
   factory TokenModel.fromJson(Map<String, dynamic> json) {
+    final accessToken = json['access_token'] as String?;
+    final refreshToken = json['refresh_token'] as String?;
+
+    if (accessToken == null || accessToken.isEmpty) {
+      throw FormatException('Missing or empty access_token in response');
+    }
+    if (refreshToken == null || refreshToken.isEmpty) {
+      throw FormatException('Missing or empty refresh_token in response');
+    }
+
     final expiresIn = json['expires_in'] as int? ?? 3600;
     return TokenModel(
-      accessToken: json['access_token'] as String,
-      refreshToken: json['refresh_token'] as String,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
       tokenType: json['token_type'] as String? ?? 'bearer',
       expiresIn: expiresIn,
       expiresAt: DateTime.now().add(Duration(seconds: expiresIn)),
@@ -69,11 +79,26 @@ class LoginResponseModel {
       );
     }
 
+    // Handle different API response formats
+    // Tokens might be at root level, or nested under 'data' or 'tokens'
+    Map<String, dynamic> tokenData = json;
+    if (json['data'] is Map<String, dynamic>) {
+      tokenData = json['data'] as Map<String, dynamic>;
+    } else if (json['tokens'] is Map<String, dynamic>) {
+      tokenData = json['tokens'] as Map<String, dynamic>;
+    }
+
+    // Get user data - might be at root level or nested
+    Map<String, dynamic>? userData;
+    if (json['user'] is Map<String, dynamic>) {
+      userData = json['user'] as Map<String, dynamic>;
+    } else if (tokenData['user'] is Map<String, dynamic>) {
+      userData = tokenData['user'] as Map<String, dynamic>;
+    }
+
     return LoginResponseModel(
-      tokens: TokenModel.fromJson(json),
-      user: json['user'] != null
-          ? UserModel.fromJson(json['user'] as Map<String, dynamic>)
-          : null,
+      tokens: TokenModel.fromJson(tokenData),
+      user: userData != null ? UserModel.fromJson(userData) : null,
       requires2FA: false,
     );
   }
