@@ -12,7 +12,7 @@ class Questions extends Table {
   TextColumn get category => text()();
 
   /// Question text to display
-  TextColumn get text => text()();
+  TextColumn get questionText => text()();
 
   /// JSON object mapping scale values to labels
   TextColumn get scaleLabels => text()();

@@ -124,7 +124,7 @@ class LocationService {
         zone.latitude,
         zone.longitude,
       );
-      if (distance <= zone.radiusMeters) {
+      if (distance <= zone.radius) {
         return true;
       }
     }

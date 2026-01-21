@@ -19,13 +19,13 @@ class NetworkInfoImpl implements NetworkInfo {
       StreamController<bool>.broadcast();
 
   NetworkInfoImpl() : _connectivity = Connectivity() {
-    _connectivity.onConnectivityChanged.listen((results) {
-      final isConnected = _isConnectedFromResults(results);
+    _connectivity.onConnectivityChanged.listen((result) {
+      final isConnected = _isConnectedFromResult(result);
       _connectivityController.add(isConnected);
     });
   }
 
-  bool _isConnectedFromResults(List<ConnectivityResult> results) {
+  bool _isConnectedFromResult(List<ConnectivityResult> results) {
     return results.any((result) =>
         result == ConnectivityResult.mobile ||
         result == ConnectivityResult.wifi ||
@@ -35,7 +35,7 @@ class NetworkInfoImpl implements NetworkInfo {
   @override
   Future<bool> get isConnected async {
     final results = await _connectivity.checkConnectivity();
-    return _isConnectedFromResults(results);
+    return _isConnectedFromResult(results);
   }
 
   @override

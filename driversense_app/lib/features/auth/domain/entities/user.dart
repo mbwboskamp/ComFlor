@@ -11,6 +11,7 @@ class User extends Equatable {
   final bool totpEnabled;
   final String? phoneNumber;
   final String? avatarUrl;
+  final String companyName;
   final DateTime? createdAt;
 
   const User({
@@ -23,6 +24,7 @@ class User extends Equatable {
     required this.totpEnabled,
     this.phoneNumber,
     this.avatarUrl,
+    this.companyName = '',
     this.createdAt,
   });
 
@@ -56,6 +58,7 @@ class User extends Equatable {
     bool? totpEnabled,
     String? phoneNumber,
     String? avatarUrl,
+    String? companyName,
     DateTime? createdAt,
   }) {
     return User(
@@ -68,6 +71,7 @@ class User extends Equatable {
       totpEnabled: totpEnabled ?? this.totpEnabled,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       avatarUrl: avatarUrl ?? this.avatarUrl,
+      companyName: companyName ?? this.companyName,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -83,6 +87,7 @@ class User extends Equatable {
         totpEnabled,
         phoneNumber,
         avatarUrl,
+        companyName,
         createdAt,
       ];
 
@@ -141,4 +146,5 @@ class AuthTokens extends Equatable {
   );
 
   bool get isEmpty => accessToken.isEmpty;
+  bool get isNotEmpty => accessToken.isNotEmpty;
 }
