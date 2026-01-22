@@ -35,9 +35,14 @@ class ErrorHandler {
       );
     }
 
-    return UnexpectedFailure(
-      message: error.toString(),
-    );
+    if (error is TypeError) {
+      return const ServerFailure(
+        message: 'Ongeldige serverrespons',
+        code: 'TYPE_ERROR',
+      );
+    }
+
+    return const UnexpectedFailure();
   }
 
   /// Maps AppException to Failure
@@ -140,7 +145,9 @@ class ErrorHandler {
         fieldErrors = errors.map(
           (key, value) => MapEntry(
             key,
-            value is List ? value.cast<String>() : [value.toString()],
+            value is List
+                ? value.whereType<String>().toList()
+                : [value?.toString() ?? ''],
           ),
         );
       }

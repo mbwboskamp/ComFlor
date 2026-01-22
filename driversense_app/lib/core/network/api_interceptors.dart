@@ -85,9 +85,14 @@ class AuthInterceptor extends Interceptor {
         data: {'refresh_token': refreshToken},
       );
 
-      if (response.statusCode == 200) {
-        final newAccessToken = response.data['access_token'] as String;
-        final newRefreshToken = response.data['refresh_token'] as String?;
+      if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        final newAccessToken = data['access_token'] as String?;
+        final newRefreshToken = data['refresh_token'] as String?;
+
+        if (newAccessToken == null || newAccessToken.isEmpty) {
+          return null;
+        }
 
         await _secureStorage.write(
           SecureStorageKeys.accessToken,
