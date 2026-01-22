@@ -95,11 +95,17 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
 
   @override
   Future<UserModel?> getUser() async {
-    final userJson = _localStorage.getJson('cached_user');
-    if (userJson == null) {
+    try {
+      final userJson = _localStorage.getJson('cached_user');
+      if (userJson == null) {
+        return null;
+      }
+      return UserModel.fromJson(userJson);
+    } catch (e) {
+      // Clear corrupted cache data
+      await _localStorage.remove('cached_user');
       return null;
     }
-    return UserModel.fromJson(userJson);
   }
 
   @override
