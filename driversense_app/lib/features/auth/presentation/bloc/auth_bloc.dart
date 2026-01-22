@@ -66,19 +66,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.password,
     ));
 
-    result.fold(
+    await result.fold(
       (failure) => emit(state.copyWith(
         status: AuthStatus.error,
         error: failure.message,
       )),
-      (loginResult) {
+      (loginResult) async {
         if (loginResult.needsTwoFactor) {
           emit(state.copyWith(
             status: AuthStatus.needs2FA,
             sessionToken: loginResult.sessionToken,
           ));
         } else {
-          _handleSuccessfulLogin(emit, loginResult.user);
+          await _handleSuccessfulLogin(emit, loginResult.user);
         }
       },
     );
