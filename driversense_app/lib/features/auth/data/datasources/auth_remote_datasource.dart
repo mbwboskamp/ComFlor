@@ -65,19 +65,28 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     required String email,
     required String password,
   }) async {
-    try {
-      final response = await _apiClient.post(
-        ApiEndpoints.login,
-        data: {
-          'email': email,
-          'password': password,
-        },
-      );
+    // TODO: Remove mock login and use real API in production
+    // Mock login for testing - always succeeds without 2FA
+    await Future.delayed(const Duration(milliseconds: 500));
 
-      return LoginResponseModel.fromJson(response.data as Map<String, dynamic>);
-    } catch (e) {
-      throw _handleError(e);
-    }
+    return LoginResponseModel(
+      tokens: TokenModel(
+        accessToken: 'mock_access_token_${DateTime.now().millisecondsSinceEpoch}',
+        refreshToken: 'mock_refresh_token_${DateTime.now().millisecondsSinceEpoch}',
+        expiresIn: 3600,
+        expiresAt: DateTime.now().add(const Duration(hours: 1)),
+      ),
+      user: UserModel(
+        id: 'user_001',
+        email: email,
+        firstName: 'Test',
+        lastName: 'User',
+        role: 'driver',
+        language: 'nl',
+        totpEnabled: false,
+      ),
+      requires2FA: false,
+    );
   }
 
   @override

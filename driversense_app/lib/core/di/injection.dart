@@ -258,12 +258,7 @@ void _registerBlocs() {
   // Tracking
   if (!getIt.isRegistered<TrackingBloc>()) {
     getIt.registerFactory<TrackingBloc>(
-      () => TrackingBloc(
-        getIt<StartTrackingUseCase>(),
-        getIt<StopTrackingUseCase>(),
-        getIt<TrackingLocalDatasource>(),
-        getIt<LocationService>(),
-      ),
+      () => TrackingBloc(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:driversense_app/features/auth/domain/entities/user.dart';
+import 'package:driversense_app/features/auth/data/models/user_model.dart';
 
 /// Token data model for API serialization
 class TokenModel extends AuthTokens {
@@ -80,6 +81,3 @@ class LoginResponseModel {
   bool get needsTwoFactor => requires2FA && sessionToken != null;
   bool get isComplete => tokens != null && !requires2FA;
 }
-
-// Import UserModel
-import 'package:driversense_app/features/auth/data/models/user_model.dart';
