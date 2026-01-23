@@ -66,22 +66,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.password,
     ));
 
-    await result.fold(
-      (failure) => emit(state.copyWith(
+    // Handle failure case
+    if (result.isLeft()) {
+      final failure = result.fold((l) => l, (r) => throw StateError('Unreachable'));
+      emit(state.copyWith(
         status: AuthStatus.error,
         error: failure.message,
-      )),
-      (loginResult) async {
-        if (loginResult.needsTwoFactor) {
-          emit(state.copyWith(
-            status: AuthStatus.needs2FA,
-            sessionToken: loginResult.sessionToken,
-          ));
-        } else {
-          await _handleSuccessfulLogin(emit, loginResult.user);
-        }
-      },
-    );
+      ));
+      return;
+    }
+
+    // Handle success case
+    final loginResult = result.getOrElse(() => throw StateError('Unreachable'));
+    if (loginResult.needsTwoFactor) {
+      emit(state.copyWith(
+        status: AuthStatus.needs2FA,
+        sessionToken: loginResult.sessionToken,
+      ));
+    } else {
+      await _handleSuccessfulLogin(emit, loginResult.user);
+    }
   }
 
   Future<void> _onVerify2FARequested(
@@ -102,15 +106,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
     User user,
   ) async {
-    final hasConsent = await _localDatasource.isConsentAccepted();
+    try {
+      final hasConsent = await _localDatasource.isConsentAccepted();
 
-    if (hasConsent) {
-      emit(state.copyWith(
-        status: AuthStatus.authenticated,
-        user: user,
-        locale: Locale(user.language),
-      ));
-    } else {
+      if (hasConsent) {
+        emit(state.copyWith(
+          status: AuthStatus.authenticated,
+          user: user,
+          locale: Locale(user.language),
+        ));
+      } else {
+        emit(state.copyWith(
+          status: AuthStatus.needsConsent,
+          user: user,
+          locale: Locale(user.language),
+        ));
+      }
+    } catch (e) {
+      // If consent check fails, default to needing consent
       emit(state.copyWith(
         status: AuthStatus.needsConsent,
         user: user,
