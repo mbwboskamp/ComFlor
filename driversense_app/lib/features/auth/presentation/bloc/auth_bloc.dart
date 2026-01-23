@@ -36,21 +36,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(state.copyWith(status: AuthStatus.loading));
 
-    // Check stored user
-    final user = await _localDatasource.getUser();
-    final locale = await _localDatasource.getLocale();
-    final hasConsent = await _localDatasource.isConsentAccepted();
+    try {
+      // Check stored user
+      final user = await _localDatasource.getUser();
+      final locale = await _localDatasource.getLocale();
+      final hasConsent = await _localDatasource.isConsentAccepted();
 
-    if (user != null) {
-      emit(state.copyWith(
-        status: hasConsent ? AuthStatus.authenticated : AuthStatus.needsConsent,
-        user: user,
-        locale: locale != null ? Locale(locale) : const Locale('nl'),
-      ));
-    } else {
+      if (user != null) {
+        emit(state.copyWith(
+          status: hasConsent ? AuthStatus.authenticated : AuthStatus.needsConsent,
+          user: user,
+          locale: locale != null ? Locale(locale) : const Locale('nl'),
+        ));
+      } else {
+        emit(state.copyWith(
+          status: AuthStatus.unauthenticated,
+          locale: locale != null ? Locale(locale) : const Locale('nl'),
+        ));
+      }
+    } catch (e) {
+      // On error, treat as unauthenticated to allow fresh login
       emit(state.copyWith(
         status: AuthStatus.unauthenticated,
-        locale: locale != null ? Locale(locale) : const Locale('nl'),
+        locale: const Locale('nl'),
       ));
     }
   }
@@ -61,30 +69,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(state.copyWith(status: AuthStatus.loading, error: null));
 
-    final result = await _loginUseCase(LoginParams(
-      email: event.email,
-      password: event.password,
-    ));
+    try {
+      final result = await _loginUseCase(LoginParams(
+        email: event.email,
+        password: event.password,
+      ));
 
-    // Handle failure case
-    if (result.isLeft()) {
-      final failure = result.fold((l) => l, (r) => throw StateError('Unreachable'));
+      // Handle failure case
+      if (result.isLeft()) {
+        final failure = result.fold((l) => l, (r) => throw StateError('Unreachable'));
+        emit(state.copyWith(
+          status: AuthStatus.error,
+          error: failure.message,
+        ));
+        return;
+      }
+
+      // Handle success case
+      final loginResult = result.getOrElse(() => throw StateError('Unreachable'));
+      if (loginResult.needsTwoFactor) {
+        emit(state.copyWith(
+          status: AuthStatus.needs2FA,
+          sessionToken: loginResult.sessionToken,
+        ));
+      } else {
+        await _handleSuccessfulLogin(emit, loginResult.user);
+      }
+    } catch (e) {
+      // Catch any unexpected errors to prevent spinner from hanging
       emit(state.copyWith(
         status: AuthStatus.error,
-        error: failure.message,
+        error: 'Er is een onverwachte fout opgetreden. Probeer het opnieuw.',
       ));
-      return;
-    }
-
-    // Handle success case
-    final loginResult = result.getOrElse(() => throw StateError('Unreachable'));
-    if (loginResult.needsTwoFactor) {
-      emit(state.copyWith(
-        status: AuthStatus.needs2FA,
-        sessionToken: loginResult.sessionToken,
-      ));
-    } else {
-      await _handleSuccessfulLogin(emit, loginResult.user);
     }
   }
 
@@ -138,7 +154,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(state.copyWith(status: AuthStatus.loading));
 
-    await _logoutUseCase();
+    try {
+      await _logoutUseCase();
+    } catch (e) {
+      // Ignore logout errors - always proceed to unauthenticated state
+    }
 
     emit(const AuthState(status: AuthStatus.unauthenticated));
   }
